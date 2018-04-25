@@ -5,7 +5,8 @@ function getVideoByText(text) {
         return;
     }
 
-    return fetch(config.searchMovieUrl + text);
+    return fetch(config.searchMovieUrl + text)
+    .then(r => r.json());
 }
 export default{
     getVideoByText
