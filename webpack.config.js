@@ -4,7 +4,7 @@ module.exports = {
     entry: './src/js/index.js',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist/js')
     },
     module:{
         rules:[
@@ -13,9 +13,9 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: 'babel-loader',
-                    options: {
-                        presets: ['stage-0'],
-                    },
+                    // options: {
+                    //     presets: ['stage-0'],
+                    // },
                 },
             },
         ]
