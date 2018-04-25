@@ -1,6 +1,5 @@
 export default function movie(data) {
     const html = `
-    <article class="movie">
         <h2>${data.title}</h2>
         <date>${data.date}</date>
         <div>${data.country}</div>
@@ -11,7 +10,6 @@ export default function movie(data) {
         <div>${data.number_of_season}</div> 
         <div>${data.overview}</div>
         <div>${data.popularity}</div>                              
-    </article>
-    `
-    
+    `;
+    return html;
 }

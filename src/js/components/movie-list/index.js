@@ -12,10 +12,9 @@ export default class MovieList {
 
     renderMovies(){
         this.fragmrnt = document.createDocumentFragment();
-
         this.data.result.forEach(data =>{
             const article = document.createElement('article');
-            article.classList.add('movies');
+            article.classList.add('movie');
             article.innerHTML = movie(data);
             this.fragmrnt.appendChild(article);
         });

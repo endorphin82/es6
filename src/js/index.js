@@ -1,11 +1,9 @@
-import config from './config';
 import MovieList from './components/movie-list';
-// import movieList from './components/movie-list/index';
-
 import moviesService from './movies-service';
 
 const input = document.querySelector('.search-input');
 const movieList = document.querySelector('.movies');
+
 input.addEventListener('input', e=>{
    const searchText = e.target.value;
 
@@ -15,5 +13,5 @@ input.addEventListener('input', e=>{
           const list = new MovieList(result);
 
           list.drawToDom(movieList);
-         });
+   });
 });
