@@ -7,15 +7,15 @@ export default class MovieList {
     }
 
     drawToDom(selector){
-        selector.innerHTML = this.movieList;
+        selector.appendChild(this.fragmrnt);
     }
 
     renderMovies(){
         this.fragmrnt = document.createDocumentFragment();
 
-        this.data.forEach(data =>{
+        this.data.result.forEach(data =>{
             const article = document.createElement('article');
-            article.classList.add('movie');
+            article.classList.add('movies');
             article.innerHTML = movie(data);
             this.fragmrnt.appendChild(article);
         });
