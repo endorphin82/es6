@@ -1,13 +1,13 @@
-import config from './config';
+import config from './config'
 
-function getVideoByText(text) {
-    if(!text){
-        return;
-    }
+function getVideoByText (text) {
+  if (!text) {
+    return
+  }
 
-    return fetch(config.searchMovieUrl + text)
-    .then(r => r.json());
+  return fetch(config.searchMovieUrl + text).then(r => r.json())
 }
-export default{
-    getVideoByText
+
+export default {
+  getVideoByText,
 }
