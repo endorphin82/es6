@@ -1,4 +1,5 @@
 import config from '../../config'
+
 export default function movie (data) {
   const mappingData = mapData(data)
   const html = `
@@ -24,17 +25,16 @@ function mapData (data) {
     language: data.origin_language || defaultValue,
     overview: data.overview || defaultValue,
     popularity: data.popularity || defaultValue,
-    id: data.id || Date.now()
+    id: data.id || Date.now(),
   }
 
+  function getPictureUrl () {
+    const url = data.backdrop_path || data.poster_path
 
-  function getPictureUrl() {
-    const url = data.backdrop_path || data.poster_path;
-
-    if (url)  {
-      return config.imageSrc + url;
+    if (url) {
+      return config.imageSrc + url
     } else {
-      return config.noImageSrc;
+      return config.noImageSrc
     }
   }
 

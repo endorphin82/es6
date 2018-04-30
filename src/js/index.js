@@ -19,7 +19,6 @@ input.addEventListener('input', e => {
     .then(result => {
       // const list = new MovieList(result)
       list.renderMovies(result)
-
       list.drawToDom(movieList)
     })
 })

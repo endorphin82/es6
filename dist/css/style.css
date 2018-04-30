@@ -1,23 +1,40 @@
-.main-title{
+.main-title {
     text-align: center;
     color: darkkhaki;
 }
-.search-block{
+
+.search-block {
     width: 50%;
-    margin: auto;
+    margin: 20px auto;
 }
-img{
+
+img {
     max-width: 100%;
     max-height: 100%;
 }
-.movie-link{}
-.movie-title{}
-.date{}
-.country{}
-.picture{
+
+.movie-link {
+}
+
+.movie-title {
+}
+
+.date {
+}
+
+.country {
+}
+
+.picture {
     max-width: 300px;
     max-height: 300px;
 }
-.language{}
-.overview{}
-.popularity{}
+
+.language {
+}
+
+.overview {
+}
+
+.popularity {
+}
