@@ -6,7 +6,6 @@ export default class MovieList {
   }
 
   drawToDom (selector) {
-    // this.selector = selector;
     this.clearList(selector)
     selector.appendChild(this.fragmrnt)
   }
@@ -30,10 +29,9 @@ export default class MovieList {
   }
 
   sort (filter) {
-    const data = [...this.data.result]
+    const data = [...this.data.results]
 
     if (filter === 'raiting-max') {
-      console.log(data)
       this.sortByMaxRaiting(data)
     }
     if (filter === 'raiting-min') {
