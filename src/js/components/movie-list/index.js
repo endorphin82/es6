@@ -57,9 +57,11 @@ export default class MovieList {
         return -1
       }
     })
+
     this.renderMovies(data)
     this.drawToDom(document.querySelector('.movies'))
-    //this.drawToDom(selector)
+    //todo
+    // this.drawToDom(selector)
   }
 
   sortByMinRaiting (data) {
@@ -73,7 +75,8 @@ export default class MovieList {
     })
     this.renderMovies(data)
     this.drawToDom(document.querySelector('.movies'))
-    //this.drawToDom(selector)
+    //todo
+    // this.drawToDom(selector)
   }
 
   sortByNew (data) {

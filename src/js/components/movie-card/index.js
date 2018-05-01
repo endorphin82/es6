@@ -7,9 +7,9 @@ function renderMovie (data) {
   const mappingData = mapData(data)
   const html = `
     <a class="back">Back</a>
-<a href='${data.id}' class='movie-link'>
+<!--<a href='${data.id}' class='movie-link'>-->
         <h2 class="movie-title">${mappingData.title}</h2>
- </a> 
+ <!--</a> -->
         <date class="date">${mappingData.date}</date>
         <div class="country">${mappingData.country}</div>
         <div class="picture"><img src='${mappingData.img}'></div>

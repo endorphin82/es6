@@ -5,7 +5,7 @@ export default function movie (data) {
   const html = `
 <a href='${data.id}' class='movie-link'>
         <h2 class="movie-title">${mappingData.title}</h2>
- 
+   </a>  
         <date class="date">${mappingData.date}</date>
         <div class="country">${mappingData.country}</div>
         <div class="picture"><img src='${mappingData.img}'></div>
@@ -13,7 +13,7 @@ export default function movie (data) {
         <div class="overview">${mappingData.overview}</div>
         <div>${mappingData.popularity}</div>                              
         <div class="popularity">${mappingData.popularity}</div>                              
-   </a> 
+
    `
   return html
 }
