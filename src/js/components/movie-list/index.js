@@ -38,10 +38,11 @@ export default class MovieList {
       this.sortByMinRaiting(data)
     }
     if (filter === 'date-new') {
+      this.sortByNew(data)
 
     }
     if (filter === 'date-old') {
-
+      this.sortByOld(data)
     }
   }
 
@@ -64,6 +65,32 @@ export default class MovieList {
         return 1
       }
       if (a.popularity < b.popularity) {
+        return -1
+      }
+    })
+    this.renderMovies(data)
+    this.drawToDom(document.querySelector('.movies'))
+  }
+
+  sortByNew (data) {
+    data.sort((a, b) => {
+      if (new Date ((a.release_date) || (a.first_air_date)) < new Date ((b.release_date) || (b.first_air_date))) {
+        return 1
+      }
+      if (new Date ((a.release_date) || (a.first_air_date)) > new Date ((b.release_date) || (b.first_air_date))) {
+        return -1
+      }
+    })
+    this.renderMovies(data)
+    this.drawToDom(document.querySelector('.movies'))
+  }
+
+  sortByOld (data) {
+    data.sort((a, b) => {
+      if (new Date ((a.release_date) || (a.first_air_date)) > new Date ((b.release_date) || (b.first_air_date))) {
+        return 1
+      }
+      if (new Date ((a.release_date) || (a.first_air_date)) < new Date ((b.release_date) || (b.first_air_date))) {
         return -1
       }
     })
