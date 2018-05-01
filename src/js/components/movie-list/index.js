@@ -6,12 +6,13 @@ export default class MovieList {
   }
 
   drawToDom (selector) {
+    this.selector = selector
     this.clearList(selector)
-    selector.appendChild(this.fragmrnt)
+    selector.appendChild(this.fragment)
   }
 
   renderMovies (data) {
-    this.fragmrnt = document.createDocumentFragment()
+    this.fragment = document.createDocumentFragment()
 
     data.forEach(data => {
       const article = document.createElement('article')
@@ -19,7 +20,7 @@ export default class MovieList {
       article.classList.add('movie')
       article.classList.add('col-md-4')
       article.innerHTML = movie(data)
-      this.fragmrnt.appendChild(article)
+      this.fragment.appendChild(article)
     })
     // debugger
   }
@@ -34,12 +35,13 @@ export default class MovieList {
     if (filter === 'raiting-max') {
       this.sortByMaxRaiting(data)
     }
+
     if (filter === 'raiting-min') {
       this.sortByMinRaiting(data)
     }
+
     if (filter === 'date-new') {
       this.sortByNew(data)
-
     }
     if (filter === 'date-old') {
       this.sortByOld(data)
@@ -57,6 +59,7 @@ export default class MovieList {
     })
     this.renderMovies(data)
     this.drawToDom(document.querySelector('.movies'))
+    //this.drawToDom(selector)
   }
 
   sortByMinRaiting (data) {
@@ -70,31 +73,43 @@ export default class MovieList {
     })
     this.renderMovies(data)
     this.drawToDom(document.querySelector('.movies'))
+    //this.drawToDom(selector)
   }
 
   sortByNew (data) {
     data.sort((a, b) => {
-      if (new Date ((a.release_date) || (a.first_air_date)) < new Date ((b.release_date) || (b.first_air_date))) {
+      if (new Date((a.release_date) || (a.first_air_date)) <
+        new Date((b.release_date) || (b.first_air_date))) {
         return 1
       }
-      if (new Date ((a.release_date) || (a.first_air_date)) > new Date ((b.release_date) || (b.first_air_date))) {
+
+      if (new Date((a.release_date) || (a.first_air_date)) >
+        new Date((b.release_date) || (b.first_air_date))) {
         return -1
       }
     })
+
     this.renderMovies(data)
     this.drawToDom(document.querySelector('.movies'))
   }
 
   sortByOld (data) {
     data.sort((a, b) => {
-      if (new Date ((a.release_date) || (a.first_air_date)) > new Date ((b.release_date) || (b.first_air_date))) {
+      if (new Date((a.release_date) || (a.first_air_date)) >
+        new Date((b.release_date) || (b.first_air_date))) {
         return 1
       }
-      if (new Date ((a.release_date) || (a.first_air_date)) < new Date ((b.release_date) || (b.first_air_date))) {
+
+      if (new Date((a.release_date) || (a.first_air_date)) <
+        new Date((b.release_date) || (b.first_air_date))) {
         return -1
       }
     })
     this.renderMovies(data)
     this.drawToDom(document.querySelector('.movies'))
+  }
+
+  hide () {
+    this.selector.style.display = 'none'
   }
 }

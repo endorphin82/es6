@@ -76,9 +76,12 @@ Object.defineProperty(exports, "__esModule", {
 var API_KEY = "c5e671d77ad5ead1175111461993f8ea";
 
 exports.default = {
-  searchMovieUrl: "https://api.themoviedb.org/3/search/movie?api_key=" + API_KEY + "&query=",
+  searchMovieUrl: "https://api.themoviedb.org/3/search/multi?api_key=" + API_KEY + "&query=",
   imageSrc: "http://image.tmdb.org/t/p/w185",
-  noImageSrc: "http://babakunyho.eu/img/default-no-image.png"
+  noImageSrc: "http://babakunyho.eu/img/default-no-image.png",
+  baseMovieUrl: "https://api.themoviedb.org/3/",
+  queryMovieById: "tv/",
+  apiKey: "?api_key=" + API_KEY
 };
 
 /***/ }),
@@ -92,7 +95,11 @@ var _movieList = __webpack_require__(2);
 
 var _movieList2 = _interopRequireDefault(_movieList);
 
-var _moviesService = __webpack_require__(4);
+var _movieCard = __webpack_require__(4);
+
+var _movieCard2 = _interopRequireDefault(_movieCard);
+
+var _moviesService = __webpack_require__(5);
 
 var _moviesService2 = _interopRequireDefault(_moviesService);
 
@@ -111,26 +118,38 @@ input.addEventListener('input', function (e) {
     return;
   }
 
-  _moviesService2.default.getVideoByText(searchText)
-  //.then(result => console.log(result)) //ok
-  .then(function (result) {
-    // const list = new MovieList(result)
-    list.renderMovies(result);
+  _moviesService2.default.getVideoByText(searchText).then(function (data) {
+    list.init(data);
+    list.renderMovies(data.results);
     list.drawToDom(movieList);
   });
 });
 
 filters.addEventListener('click', function (e) {
   e.preventDefault();
-  debugger;
+  // debugger
   var target = e.target;
   var dataAttr = target.getAttribute('data-filter');
-
   if (!dataAttr) {
     return;
   }
-
   list.sort(dataAttr);
+});
+
+movieList.addEventListener('click', function (e) {
+  var target = e.target;
+  var link = target.closest('.movie-link');
+  var id = void 0;
+
+  e.preventDefault();
+
+  if (!link) {
+    return;
+  }
+  id = link.getAttribute('href');
+  _moviesService2.default.getVideoById(id).then(function (data) {
+    _movieCard2.default.renderMovie(data);
+  });
 });
 
 /***/ }),
@@ -152,6 +171,8 @@ var _movie2 = _interopRequireDefault(_movie);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var MovieList = function () {
@@ -160,27 +181,31 @@ var MovieList = function () {
   }
 
   _createClass(MovieList, [{
+    key: 'init',
+    value: function init(data) {
+      this.data = data;
+    }
+  }, {
     key: 'drawToDom',
     value: function drawToDom(selector) {
+      this.selector = selector;
       this.clearList(selector);
-      selector.appendChild(this.fragmrnt);
+      selector.appendChild(this.fragment);
     }
   }, {
     key: 'renderMovies',
     value: function renderMovies(data) {
       var _this = this;
 
-      this.data = data;
-      this.fragmrnt = document.createDocumentFragment();
-      //  console.log(this.data.results)
-      // if (error) return console.error('sa'+error)
-      this.data.results.forEach(function (data) {
+      this.fragment = document.createDocumentFragment();
+
+      data.forEach(function (data) {
         var article = document.createElement('article');
+
         article.classList.add('movie');
         article.classList.add('col-md-4');
-
         article.innerHTML = (0, _movie2.default)(data);
-        _this.fragmrnt.appendChild(article);
+        _this.fragment.appendChild(article);
       });
       // debugger
     }
@@ -192,17 +217,42 @@ var MovieList = function () {
   }, {
     key: 'sort',
     value: function sort(filter) {
-      if (filter = 'raitingMax') {
-        this.sortByMaxRaiting();
+      var data = [].concat(_toConsumableArray(this.data.results));
+
+      if (filter === 'raiting-max') {
+        this.sortByMaxRaiting(data);
       }
-      if (filter = 'raitingMin') {}
-      if (filter = 'dateNew') {}
-      if (filter = 'dateOld') {}
+
+      if (filter === 'raiting-min') {
+        this.sortByMinRaiting(data);
+      }
+
+      if (filter === 'date-new') {
+        this.sortByNew(data);
+      }
+      if (filter === 'date-old') {
+        this.sortByOld(data);
+      }
     }
   }, {
     key: 'sortByMaxRaiting',
-    value: function sortByMaxRaiting() {
-      this.data.results.sort(function (a, b) {
+    value: function sortByMaxRaiting(data) {
+      data.sort(function (a, b) {
+        if (a.popularity < b.popularity) {
+          return 1;
+        }
+        if (a.popularity > b.popularity) {
+          return -1;
+        }
+      });
+      this.renderMovies(data);
+      this.drawToDom(document.querySelector('.movies'));
+      //this.drawToDom(selector)
+    }
+  }, {
+    key: 'sortByMinRaiting',
+    value: function sortByMinRaiting(data) {
+      data.sort(function (a, b) {
         if (a.popularity > b.popularity) {
           return 1;
         }
@@ -210,6 +260,45 @@ var MovieList = function () {
           return -1;
         }
       });
+      this.renderMovies(data);
+      this.drawToDom(document.querySelector('.movies'));
+      //this.drawToDom(selector)
+    }
+  }, {
+    key: 'sortByNew',
+    value: function sortByNew(data) {
+      data.sort(function (a, b) {
+        if (new Date(a.release_date || a.first_air_date) < new Date(b.release_date || b.first_air_date)) {
+          return 1;
+        }
+
+        if (new Date(a.release_date || a.first_air_date) > new Date(b.release_date || b.first_air_date)) {
+          return -1;
+        }
+      });
+
+      this.renderMovies(data);
+      this.drawToDom(document.querySelector('.movies'));
+    }
+  }, {
+    key: 'sortByOld',
+    value: function sortByOld(data) {
+      data.sort(function (a, b) {
+        if (new Date(a.release_date || a.first_air_date) > new Date(b.release_date || b.first_air_date)) {
+          return 1;
+        }
+
+        if (new Date(a.release_date || a.first_air_date) < new Date(b.release_date || b.first_air_date)) {
+          return -1;
+        }
+      });
+      this.renderMovies(data);
+      this.drawToDom(document.querySelector('.movies'));
+    }
+  }, {
+    key: 'hide',
+    value: function hide() {
+      this.selector.style.display = 'none';
     }
   }]);
 
@@ -238,7 +327,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function movie(data) {
   var mappingData = mapData(data);
-  var html = '\n        <h2 class="movie-title">' + mappingData.title + '</h2>\n        <date class="date">' + mappingData.date + '</date>\n        <div class="country">' + mappingData.country + '</div>\n        <div class="picture"><img src=\'' + mappingData.img + '\'></div>\n        <div class="language">' + mappingData.language + '</div>\n        <div class="overview">' + mappingData.overview + '</div>\n        <div>' + mappingData.popularity + '</div>                              \n        <div class="popularity">' + mappingData.id + '</div>                              \n    ';
+  var html = '\n<a href=\'' + data.id + '\' class=\'movie-link\'>\n        <h2 class="movie-title">' + mappingData.title + '</h2>\n \n        <date class="date">' + mappingData.date + '</date>\n        <div class="country">' + mappingData.country + '</div>\n        <div class="picture"><img src=\'' + mappingData.img + '\'></div>\n        <div class="language">' + mappingData.language + '</div>\n        <div class="overview">' + mappingData.overview + '</div>\n        <div>' + mappingData.popularity + '</div>                              \n        <div class="popularity">' + mappingData.popularity + '</div>                              \n   </a> \n   ';
   return html;
 }
 
@@ -283,6 +372,82 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var listWrapper = document.querySelector('.list-wrapper');
+var movieWrapper = document.querySelector('.movie-wrapper');
+
+function renderMovie(data) {
+  var mappingData = mapData(data);
+  var html = '\n    <a class="back">Back</a>\n<a href=\'' + data.id + '\' class=\'movie-link\'>\n        <h2 class="movie-title">' + mappingData.title + '</h2>\n </a> \n        <date class="date">' + mappingData.date + '</date>\n        <div class="country">' + mappingData.country + '</div>\n        <div class="picture"><img src=\'' + mappingData.img + '\'></div>\n        <div class="language">' + mappingData.language + '</div>\n        <div class="overview">' + mappingData.overview + '</div>\n        <div>' + mappingData.popularity + '</div>                              \n        <div class="popularity">' + mappingData.popularity + '</div>  \n        <div class="episodesCount">' + mappingData.episodesCount + '</div>\n        <div class="seasonsCount">' + mappingData.seasonsCount + '</div>\n        <div class="homeUrl">' + mappingData.homeUrl + '</div>                            \n    ';
+  render(html);
+}
+
+function mapData(data) {
+  var defaultValue = 'Unknown';
+  return {
+    title: data.title || data.name || defaultValue,
+    date: data.release_date || data.first_air_date || defaultValue,
+    country: data.origin_country || defaultValue,
+    img: getPictureUrl(),
+    language: data.origin_language || defaultValue,
+    overview: data.overview || defaultValue,
+    popularity: data.popularity || defaultValue,
+    id: data.id || Date.now(),
+    episodesCount: data.number_of_episodes,
+    seasonsCount: data.number_of_seasons,
+    homeUrl: data.homepage
+  };
+
+  function getPictureUrl() {
+    var url = data.backdrop_path || data.poster_path;
+
+    if (url) {
+      return _config2.default.imageSrc + url;
+    } else {
+      return _config2.default.noImageSrc;
+    }
+  }
+}
+
+function render(html) {
+  var element = document.createElement('article');
+
+  element.classList.add('movie');
+  element.innerHTML = html;
+  movieWrapper.style.display = 'block';
+  listWrapper.style.display = 'none';
+  movieWrapper.innerHTML = '';
+  movieWrapper.appendChild(element);
+  var backButton = document.querySelector('.back');
+  backButton.addEventListener('click', back);
+}
+
+function back() {
+  listWrapper.style.display = 'block';
+  movieWrapper.style.display = 'none';
+}
+
+exports.default = {
+  renderMovie: renderMovie,
+  back: back
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function getVideoByText(text) {
   if (!text) {
     return;
@@ -292,8 +457,17 @@ function getVideoByText(text) {
   });
 }
 
+function getVideoById(id) {
+  var url = '' + _config2.default.baseMovieUrl + _config2.default.queryMovieById + id + _config2.default.apiKey;
+
+  return fetch(url).then(function (r) {
+    return r.json();
+  });
+}
+
 exports.default = {
-  getVideoByText: getVideoByText
+  getVideoByText: getVideoByText,
+  getVideoById: getVideoById
 };
 
 /***/ })
