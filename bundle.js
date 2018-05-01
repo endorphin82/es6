@@ -101,6 +101,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var input = document.querySelector('.search-input');
 var movieList = document.querySelector('.movies');
 var list = new _movieList2.default();
+var filters = document.querySelector('.filters');
 
 input.addEventListener('input', function (e) {
   var searchText = e.target.value;
@@ -115,9 +116,21 @@ input.addEventListener('input', function (e) {
   .then(function (result) {
     // const list = new MovieList(result)
     list.renderMovies(result);
-
     list.drawToDom(movieList);
   });
+});
+
+filters.addEventListener('click', function (e) {
+  e.preventDefault();
+  debugger;
+  var target = e.target;
+  var dataAttr = target.getAttribute('data-filter');
+
+  if (!dataAttr) {
+    return;
+  }
+
+  list.sort(dataAttr);
 });
 
 /***/ }),
@@ -148,13 +161,6 @@ var MovieList = function () {
 
   _createClass(MovieList, [{
     key: 'drawToDom',
-
-    // constructor (data) {
-    //   this.data = data
-    //  // console.log(this.data.results)
-    //   this.renderMovies()
-    // }
-
     value: function drawToDom(selector) {
       this.clearList(selector);
       selector.appendChild(this.fragmrnt);
@@ -171,6 +177,8 @@ var MovieList = function () {
       this.data.results.forEach(function (data) {
         var article = document.createElement('article');
         article.classList.add('movie');
+        article.classList.add('col-md-4');
+
         article.innerHTML = (0, _movie2.default)(data);
         _this.fragmrnt.appendChild(article);
       });
@@ -180,6 +188,28 @@ var MovieList = function () {
     key: 'clearList',
     value: function clearList(selector) {
       selector.innerHTML = '';
+    }
+  }, {
+    key: 'sort',
+    value: function sort(filter) {
+      if (filter = 'raitingMax') {
+        this.sortByMaxRaiting();
+      }
+      if (filter = 'raitingMin') {}
+      if (filter = 'dateNew') {}
+      if (filter = 'dateOld') {}
+    }
+  }, {
+    key: 'sortByMaxRaiting',
+    value: function sortByMaxRaiting() {
+      this.data.results.sort(function (a, b) {
+        if (a.popularity > b.popularity) {
+          return 1;
+        }
+        if (a.popularity < b.popularity) {
+          return -1;
+        }
+      });
     }
   }]);
 
