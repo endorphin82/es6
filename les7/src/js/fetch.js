@@ -1,0 +1,5 @@
+fetch('src/js/data.json')
+  .then(response => console.log(response))
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(error => console.log(error))

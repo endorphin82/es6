@@ -1,0 +1,17 @@
+{
+  "name": "data.json",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/marvel-heros/data.json.git",
+  "author": "Phil <youngphil.gim@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "movies": "node ./movies",
+    "heros": "node ./heros"
+  },
+  "devDependencies": {
+    "csvtojson": "^1.1.9",
+    "jsonfile": "^4.0.0",
+    "request": "^2.83.0"
+  }
+}

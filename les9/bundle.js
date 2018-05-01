@@ -245,9 +245,11 @@ var MovieList = function () {
           return -1;
         }
       });
+
       this.renderMovies(data);
       this.drawToDom(document.querySelector('.movies'));
-      //this.drawToDom(selector)
+      //todo
+      // this.drawToDom(selector)
     }
   }, {
     key: 'sortByMinRaiting',
@@ -262,7 +264,8 @@ var MovieList = function () {
       });
       this.renderMovies(data);
       this.drawToDom(document.querySelector('.movies'));
-      //this.drawToDom(selector)
+      //todo
+      // this.drawToDom(selector)
     }
   }, {
     key: 'sortByNew',
@@ -327,7 +330,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function movie(data) {
   var mappingData = mapData(data);
-  var html = '\n<a href=\'' + data.id + '\' class=\'movie-link\'>\n        <h2 class="movie-title">' + mappingData.title + '</h2>\n \n        <date class="date">' + mappingData.date + '</date>\n        <div class="country">' + mappingData.country + '</div>\n        <div class="picture"><img src=\'' + mappingData.img + '\'></div>\n        <div class="language">' + mappingData.language + '</div>\n        <div class="overview">' + mappingData.overview + '</div>\n        <div>' + mappingData.popularity + '</div>                              \n        <div class="popularity">' + mappingData.popularity + '</div>                              \n   </a> \n   ';
+  var html = '\n<a href=\'' + data.id + '\' class=\'movie-link\'>\n        <h2 class="movie-title">' + mappingData.title + '</h2>\n   </a>  \n        <date class="date">' + mappingData.date + '</date>\n        <div class="country">' + mappingData.country + '</div>\n        <div class="picture"><img src=\'' + mappingData.img + '\'></div>\n        <div class="language">' + mappingData.language + '</div>\n        <div class="overview">' + mappingData.overview + '</div>\n        <div>' + mappingData.popularity + '</div>                              \n        <div class="popularity">' + mappingData.popularity + '</div>                              \n\n   ';
   return html;
 }
 
@@ -377,7 +380,7 @@ var movieWrapper = document.querySelector('.movie-wrapper');
 
 function renderMovie(data) {
   var mappingData = mapData(data);
-  var html = '\n    <a class="back">Back</a>\n<a href=\'' + data.id + '\' class=\'movie-link\'>\n        <h2 class="movie-title">' + mappingData.title + '</h2>\n </a> \n        <date class="date">' + mappingData.date + '</date>\n        <div class="country">' + mappingData.country + '</div>\n        <div class="picture"><img src=\'' + mappingData.img + '\'></div>\n        <div class="language">' + mappingData.language + '</div>\n        <div class="overview">' + mappingData.overview + '</div>\n        <div>' + mappingData.popularity + '</div>                              \n        <div class="popularity">' + mappingData.popularity + '</div>  \n        <div class="episodesCount">' + mappingData.episodesCount + '</div>\n        <div class="seasonsCount">' + mappingData.seasonsCount + '</div>\n        <div class="homeUrl">' + mappingData.homeUrl + '</div>                            \n    ';
+  var html = '\n    <a class="back">Back</a>\n<!--<a href=\'' + data.id + '\' class=\'movie-link\'>-->\n        <h2 class="movie-title">' + mappingData.title + '</h2>\n <!--</a> -->\n        <date class="date">' + mappingData.date + '</date>\n        <div class="country">' + mappingData.country + '</div>\n        <div class="picture"><img src=\'' + mappingData.img + '\'></div>\n        <div class="language">' + mappingData.language + '</div>\n        <div class="overview">' + mappingData.overview + '</div>\n        <div>' + mappingData.popularity + '</div>                              \n        <div class="popularity">' + mappingData.popularity + '</div>  \n        <div class="episodesCount">' + mappingData.episodesCount + '</div>\n        <div class="seasonsCount">' + mappingData.seasonsCount + '</div>\n        <div class="homeUrl">' + mappingData.homeUrl + '</div>                            \n    ';
   render(html);
 }
 
