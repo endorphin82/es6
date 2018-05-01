@@ -28,10 +28,8 @@ filters.addEventListener('click', (e) => {
   // debugger
   const target = e.target
   const dataAttr = target.getAttribute('data-filter')
-
   if (!dataAttr) {
     return
   }
-
   list.sort(dataAttr)
 })

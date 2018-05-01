@@ -55,7 +55,6 @@ export default class MovieList {
       if (a.popularity > b.popularity) {
         return -1
       }
-
     })
     this.renderMovies(data)
     this.drawToDom(document.querySelector('.movies'))
@@ -69,7 +68,6 @@ export default class MovieList {
       if (a.popularity < b.popularity) {
         return -1
       }
-
     })
     this.renderMovies(data)
     this.drawToDom(document.querySelector('.movies'))
