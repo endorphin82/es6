@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="dist/css/style.css">
+    <title>Movie</title>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="list-wrapper">
+            <h1 class="main-title">Find the movie</h1>
+            <div class="form-group search-block">
+                <input type="text" class="search-input form-control">
+                <ul class="filters">
+                    <li><a data-filter="raiting-max" href="#">Рейтинг макс.</a></li>
+                    <li><a data-filter="raiting-min" href="#">Рейтинг мин.</a></li>
+                    <li><a data-filter="date-new" href="#">Новые</a></li>
+                    <li><a data-filter="date-old" href="#">Старые</a></li>
+                </ul>
+            </div>
+			<div class="container">
+    <div class="row movies"></div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="movie-wrapper">
+
+</div>
+<!--<script src="src/js/index.js"></script>-->
+<script src="bundle.js"></script>
+</body>
+</html>
