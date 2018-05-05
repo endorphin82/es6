@@ -3,6 +3,7 @@ import movie from '../movie'
 export default class MovieList {
   init (data) {
     this.data = data
+    // console.log(this)
   }
 
   drawToDom (selector) {

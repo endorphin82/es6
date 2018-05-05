@@ -19,7 +19,9 @@ function renderMovie (data) {
         <div class="popularity">${mappingData.popularity}</div>  
         <div class="episodesCount">${mappingData.episodesCount}</div>
         <div class="seasonsCount">${mappingData.seasonsCount}</div>
-        <div class="homeUrl">${mappingData.homeUrl}</div>                            
+        <div class="homeUrl">${mappingData.homeUrl}</div>
+        <div class="id">${mappingData.id}</div>
+                                    
     `
   render(html)
 }
@@ -27,6 +29,7 @@ function renderMovie (data) {
 function mapData (data) {
   const defaultValue = 'Unknown'
   return {
+    id: data.id,
     title: data.title || data.name || defaultValue,
     date: data.release_date || data.first_air_date || defaultValue,
     country: data.origin_country || defaultValue,
