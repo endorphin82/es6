@@ -4,6 +4,9 @@ import movieCard from './components/movie-card'
 
 import moviesService from './movies-service'
 
+// import movie from './components/movie'
+
+// const link = document.querySelector('.movie-link')
 const input = document.querySelector('.search-input')
 const movieList = document.querySelector('.movies')
 const list = new MovieList()
@@ -11,7 +14,6 @@ const filters = document.querySelector('.filters')
 
 input.addEventListener('input', e => {
   const searchText = e.target.value
-
   if (!searchText) {
     list.clearList(movieList)
     return
@@ -22,14 +24,12 @@ input.addEventListener('input', e => {
       list.init(data)
       list.renderMovies(data.results)
       list.drawToDom(movieList)
-
-      // console.log(data)
     })
 })
 
+
 filters.addEventListener('click', (e) => {
   e.preventDefault()
-  // debugger
   const target = e.target
   const dataAttr = target.getAttribute('data-filter')
   if (!dataAttr) {

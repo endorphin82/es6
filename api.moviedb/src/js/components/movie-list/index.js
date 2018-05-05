@@ -16,13 +16,11 @@ export default class MovieList {
 
     data.forEach(data => {
       const article = document.createElement('article')
-
       article.classList.add('movie')
       article.classList.add('col-md-4')
       article.innerHTML = movie(data)
       this.fragment.appendChild(article)
     })
-    // debugger
   }
 
   clearList (selector) {
@@ -31,7 +29,6 @@ export default class MovieList {
 
   sort (filter) {
     const data = [...this.data.results]
-
     if (filter === 'raiting-max') {
       this.sortByMaxRaiting(data)
     }
@@ -57,11 +54,8 @@ export default class MovieList {
         return -1
       }
     })
-
     this.renderMovies(data)
-    this.drawToDom(document.querySelector('.movies'))
-    //todo
-    // this.drawToDom(selector)
+    this.drawToDom(this.selector)
   }
 
   sortByMinRaiting (data) {
@@ -74,9 +68,7 @@ export default class MovieList {
       }
     })
     this.renderMovies(data)
-    this.drawToDom(document.querySelector('.movies'))
-    //todo
-    // this.drawToDom(selector)
+    this.drawToDom(this.selector)
   }
 
   sortByNew (data) {
@@ -91,9 +83,8 @@ export default class MovieList {
         return -1
       }
     })
-
     this.renderMovies(data)
-    this.drawToDom(document.querySelector('.movies'))
+    this.drawToDom(this.selector)
   }
 
   sortByOld (data) {
@@ -109,10 +100,10 @@ export default class MovieList {
       }
     })
     this.renderMovies(data)
-    this.drawToDom(document.querySelector('.movies'))
+    this.drawToDom(this.selector)
   }
 
-  hide () {
-    this.selector.style.display = 'none'
-  }
+  // hide () {
+  //   this.selector.style.display = 'none'
+  // }
 }

@@ -28,7 +28,7 @@ function mapData (data) {
     language: data.origin_language || defaultValue,
     overview: data.overview || defaultValue,
     popularity: data.popularity || defaultValue,
-    id: data.id || Date.now(),
+    id: data.id //|| Date.now(),
   }
 
   function getPictureUrl () {
